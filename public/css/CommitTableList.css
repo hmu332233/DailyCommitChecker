@@ -1,0 +1,24 @@
+.commit_table_list {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #123423;
+}
+
+.commit_table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff123;
+}
+
+.commit_table .table {
+  
+}
+
+.commit_table .table .node {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #fefefe;
+  background: rgb(198, 228, 139);
+}
