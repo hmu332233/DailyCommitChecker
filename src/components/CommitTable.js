@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as githubApi from '../api/githubApi';
 
 const propTypes = {
   userName: PropTypes.string
@@ -17,6 +18,19 @@ class CommitTable extends React.Component {
     this.state = {
       commitState: [true, false, true, false, false, false, true]
     };
+    
+  }
+  
+  componentDidMount() {
+    githubApi.getEvents(this.props.userName)
+      .then(data => {
+      	const events = data.data;
+        const posts = events.map(function (event) {
+          console.log(new Date(event.created_at));
+        });
+      console.log(events);
+        // this.setState({ posts });
+      });
   }
 
   render() {
