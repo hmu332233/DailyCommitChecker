@@ -22,15 +22,29 @@ class CommitTable extends React.Component {
   }
   
   componentDidMount() {
+    const currentDate = new Date();
+    console.log(currentDate);
+    const newdate = new Date(currentDate);
+    newdate.setDate(newdate.getDate() - 7); // minus the date
+    const dateAWeekAgo = new Date(newdate);
+    console.log(dateAWeekAgo);
+  	
     githubApi.getEvents(this.props.userName)
-      .then(data => {
-      	const events = data.data;
-        const posts = events.map(function (event) {
-          console.log(new Date(event.created_at));
+      .then(eventsData => {
+      	
+      	//현재 날짜로부터 일주일전까지의 event만을 가져온다.
+        const events = eventsData.data.filter(function (event) {
+        	const eventDate = new Date(event.created_at);
+       		return eventDate.getTime() > dateAWeekAgo.getTime();
         });
-      console.log(events);
-        // this.setState({ posts });
+      	console.log(events);
+        
+      	events.forEach(function (event) {
+          console.log(event.created_at);
+        });
       });
+    
+    
   }
 
   render() {
