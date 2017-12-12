@@ -2,28 +2,46 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  userName: PropTypes.string,
+  userName: PropTypes.string
 };
 
 const defaultProps = {
-  userName: ['hmu332233']
+  userName: 'hmu332233',
+  
 };
 
 class CommitTable extends React.Component {
   
   constructor(props) {
     super(props);
-    this.setRandomColor = this.setRandomColor.bind(this);
+    this.state = {
+      commitState: [true, false, true, false, false, false, true]
+    };
   }
 
   render() {
     
+    const nodeElement = function (active, _key) {
+      const _className = `node ${active}`;
+     	return (
+        <div className={_className} key={_key}></div>
+      );
+    };
+    
+    const convertToNode = function (commitState) {
+      return commitState.map(function (state, i) {
+        if (state) {
+          return nodeElement('active', i);
+        } else {
+          return nodeElement('', i);
+        }
+      });
+    };
+    
     return (
       <div className="commit_table">
         <div className="table">
-          <div className="node"></div>
-      		<div className="node"></div>
-      		<div className="node"></div>
+      		{convertToNode(this.state.commitState)}
         </div>
         <div className="user_name">
           {this.props.userName}

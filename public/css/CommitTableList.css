@@ -1,6 +1,6 @@
 .commit_table_list {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   border: 1px solid #123423;
 }
 
@@ -20,5 +20,9 @@
   width: 30px;
   height: 30px;
   border: 1px solid #fefefe;
+}
+
+.commit_table .table .node.active {
   background: rgb(198, 228, 139);
 }
+
