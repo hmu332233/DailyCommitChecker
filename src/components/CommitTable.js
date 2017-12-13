@@ -16,7 +16,7 @@ class CommitTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      commitState: [true, false, true, false, false, false, true]
+      commitState: [0,0,0,0,0,0,0]
     };
     
   }
@@ -39,12 +39,29 @@ class CommitTable extends React.Component {
         });
       	console.log(events);
         
+      	const commitState = [];
+
+
+        for(var i = 0; i < 7; i++) {
+            commitState.push(0);
+        }
       	events.forEach(function (event) {
-          console.log(event.created_at);
+          const date = new Date(event.created_at);
+          const day = date.getDay();
+          console.log(date);
+          console.log(day);
+          if (commitState[day]) {
+            commitState[day] += 1;
+          } else {
+            commitState[day] = 1;
+          }
+        });
+      
+      	console.log(commitState);
+      	this.setState({
+          commitState: commitState
         });
       });
-    
-    
   }
 
   render() {
@@ -58,7 +75,7 @@ class CommitTable extends React.Component {
     
     const convertToNode = function (commitState) {
       return commitState.map(function (state, i) {
-        if (state) {
+        if (state && state > 0) {
           return nodeElement('active', i);
         } else {
           return nodeElement('', i);

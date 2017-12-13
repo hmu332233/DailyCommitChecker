@@ -8,7 +8,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  userNameList: ['hmu332233']
+  userNameList: ['hmu332233', 'tkdals1119', 'dohun94']
 };
 
 class CommitTableList extends React.Component {
@@ -30,9 +30,17 @@ class CommitTableList extends React.Component {
   
   render() {
     
+    const convertToTable = function (userNameList) {
+      return userNameList.map(function (_userName, i) {
+        return (
+          <CommitTable userName={_userName}/>
+        );
+      });
+    };
+    
     return (
       <div className="commit_table_list">
-        <CommitTable userName={this.props.userNameList[0]}/>
+        {convertToTable(this.props.userNameList)}
       </div>
     );
   }
