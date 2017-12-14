@@ -25,7 +25,7 @@ class CommitTable extends React.Component {
     const currentDate = new Date();
     console.log(currentDate);
     const newdate = new Date(currentDate);
-    newdate.setDate(newdate.getDate() - 7); // minus the date
+    newdate.setDate(newdate.getDate() - 6); // minus the date
     const dateAWeekAgo = new Date(newdate);
     console.log(dateAWeekAgo);
   	
@@ -66,19 +66,19 @@ class CommitTable extends React.Component {
 
   render() {
     
-    const nodeElement = function (active, _key) {
+    const nodeElement = function (active, commitSize, _key) {
       const _className = `node ${active}`;
      	return (
-        <div className={_className} key={_key}></div>
+        <div className={_className} key={_key}>{commitSize}</div>
       );
     };
     
     const convertToNode = function (commitState) {
       return commitState.map(function (state, i) {
         if (state && state > 0) {
-          return nodeElement('active', i);
+          return nodeElement('active', state, i);
         } else {
-          return nodeElement('', i);
+          return nodeElement('', state,i);
         }
       });
     };

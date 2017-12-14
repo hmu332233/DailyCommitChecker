@@ -8,25 +8,16 @@ const propTypes = {
 };
 
 const defaultProps = {
-  userNameList: ['hmu332233', 'tkdals1119', 'dohun94']
+  userNameList: ['hmu332233', 'tkdals1119', 'dohun94', 'lainrose']
 };
 
 class CommitTableList extends React.Component {
   
   constructor(props) {
     super(props);
-    this.setRandomColor = this.setRandomColor.bind(this);
   }
   
-  setRandomColor() {
-    const color = [
-      Math.floor((Math.random()*55) + 200),
-      Math.floor((Math.random()*55) + 200),
-      Math.floor((Math.random()*55) + 200)
-    ];
-    
-    this.props.handleSetColor(color);
-  }
+
   
   render() {
     

@@ -4,9 +4,32 @@ import CommitTableList from './CommitTableList';
 // import '../../public/css/CommitTableList.css'; 
 
 class App extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      userName: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(e) {
+    this.setState({
+      userName: e.target.value
+    });
+  }
+  
   render() {
     return (
-      <CommitTableList/>
+      <div>
+      	<input
+          name="user_name"
+          placeholder="유저 이름"
+          value={this.state.userName}
+          onChange={this.handleChange}
+        />
+      	<CommitTableList userNameList={['hmu332233']}/>
+      </div>
     );
   }
 }
