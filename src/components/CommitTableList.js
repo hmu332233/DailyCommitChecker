@@ -3,21 +3,53 @@ import PropTypes from 'prop-types';
 
 import CommitTable from './CommitTable';
 
+import update from 'react-addons-update';
+
 const propTypes = {
-  userNameList: PropTypes.arrayOf(PropTypes.string),
+ 
 };
 
 const defaultProps = {
-  userNameList: ['hmu332233', 'tkdals1119', 'dohun94', 'lainrose']
+
 };
 
 class CommitTableList extends React.Component {
   
   constructor(props) {
     super(props);
+    this.state = {
+      inputUserName: '',
+      userNameList: ['hmu332233', 'tkdals1119', 'dohun94']
+    };
+    
+    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
   
-
+  addNewUser(userName) {
+    const newUserNameList = update(
+      this.state.userNameList,
+      {
+        $push: [userName]
+      }
+    );
+    this.setState({
+      userNameList: newUserNameList,
+      inputUserName: ''
+    });
+  }
+  
+  handleChange(e) {
+  	this.setState({
+      inputUserName: e.target.value
+    });
+  }
+  
+  handleKeyPress(e) {
+    if(e.charCode==13){
+      this.addNewUser(this.state.inputUserName);
+    }
+  };
   
   render() {
     
@@ -30,9 +62,19 @@ class CommitTableList extends React.Component {
     };
     
     return (
-      <div className="commit_table_list">
-        {convertToTable(this.props.userNameList)}
+      <div>
+      	<input
+          name="user_name"
+          placeholder="유저 이름"
+          value={this.state.inputUserName}
+          onChange={this.handleChange}
+      		onKeyPress={this.handleKeyPress}
+        />
+      	<div className="commit_table_list">
+          {convertToTable(this.state.userNameList)}
+        </div>
       </div>
+      
     );
   }
 }
