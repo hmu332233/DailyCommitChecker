@@ -5,15 +5,15 @@
 }
 
 .commit_table {
+  border: 1px solid #fff123;
+  text-align: center;
+}
+
+.commit_table .table {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #fff123;
-}
-
-.commit_table .table {
-  
 }
 
 .commit_table .table .node {

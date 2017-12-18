@@ -84,7 +84,7 @@ class CommitTable extends React.Component {
     };
     
     return (
-      <div className="commit_table">
+      <div className="col-3 commit_table">
         <div className="table">
       		{convertToNode(this.state.commitState)}
         </div>

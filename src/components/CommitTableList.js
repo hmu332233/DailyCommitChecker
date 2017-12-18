@@ -62,15 +62,17 @@ class CommitTableList extends React.Component {
     };
     
     return (
-      <div>
-      	<input
-          name="user_name"
-          placeholder="유저 이름"
-          value={this.state.inputUserName}
-          onChange={this.handleChange}
-      		onKeyPress={this.handleKeyPress}
-        />
-      	<div className="commit_table_list">
+      <div className="container">
+      	<div className="row">
+      		<input
+            name="user_name"
+            placeholder="유저 이름"
+            value={this.state.inputUserName}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
+          />
+      	</div>
+      	<div className="row commit_table_list">
           {convertToTable(this.state.userNameList)}
         </div>
       </div>
