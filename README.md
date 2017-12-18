@@ -2,7 +2,7 @@
 React를 사용해보는게 목적인 프로젝트로  
 사용자간 한 주간의 커밋 log를 볼 수 있도록 하는 웹 페이지
 
-https://github.com/hmu332233/DailyCommitChecker
+https://hmu332233.github.io/DailyCommitChecker/
 
 ### 개발 환경
 - **nodejs**
