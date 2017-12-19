@@ -84,12 +84,24 @@ class CommitTable extends React.Component {
     };
     
     return (
-      <div className="commit_table">
-        <div className="table">
-      		{convertToNode(this.state.commitState)}
-        </div>
-        <div className="user_name">
-          {this.props.userName}
+      <div className="commit-table">
+        <div className="row bg-white">
+          <div className="left-col col-lg-6 d-flex align-items-center justify-content-between">
+            <div className="commit-table__user-profile d-flex align-items-center">
+              <div className="commit-table__user-image-wrapper"><img src="" alt="img" className="img-fluid"/></div>
+              <div className="commit-table__user-id">
+                <h6>{this.props.userName}</h6>
+              </div>
+            </div>
+            <div className="commit-table__check">Today Commit: <span>O</span></div>
+          </div>
+          <div className="right-col col-lg-6 d-flex align-items-center">
+            <div className="commit-table__date">12:00 PM </div>
+            <div className="commit-table__count">count: <span>20</span></div>
+            <div className="commit-table__commits ml-auto">
+              {convertToNode(this.state.commitState)}
+            </div>
+          </div>
         </div>
       </div>
     );
