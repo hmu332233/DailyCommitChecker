@@ -12,6 +12,10 @@ header.page-header {
    
 }
 
+section {
+  padding: 50px 0;
+}
+
 .page-header {
   padding: 20px 0;
   background: #fff;

@@ -10,8 +10,8 @@
   <body>
     <!-- header -->
     <header class="page-header">
-      <div class="container-fluid">
-        <h2 class="no-margin-bottom">Dashboard</h2>
+      <div class="container">
+        <h2 class="no-margin-bottom">Daily Commit Checker</h2>
       </div>
     </header>
     <!-- //header -->
@@ -19,7 +19,14 @@
     <!-- <section id="CommitTableList"></section> -->
     <!-- //CommitTableList -->
     <section class="projects">
-      <div class="container-fluid">
+      <div class="container">
+        <div class="commit-table__input-wrapper">
+          <div class="form-group">
+            <label class="form-control-label sr-only">User ID</label>
+            <input type="text" placeholder="User ID" class="form-control col-2">
+          </div>
+        </div>
+
         <!-- Project-->
         <div class="commit-table">
           <div class="row bg-white">
