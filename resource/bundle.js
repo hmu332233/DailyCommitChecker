@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8fd7d64cc5a30c3bf8f3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "272e6574410caa4bc01c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -2349,7 +2349,7 @@ var _App2 = _interopRequireDefault(_App);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rootElement = document.getElementById('root');
+var rootElement = document.getElementById('CommitTableList');
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), rootElement);
 
  ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } /* eslint-disable camelcase, no-undef */ var webpackExports = typeof __webpack_exports__ !== 'undefined' ? __webpack_exports__ : module.exports; /* eslint-enable camelcase, no-undef */ if (typeof webpackExports === 'function') { __REACT_HOT_LOADER__.register(webpackExports, 'module.exports', "/workspace/DailyCommit/src/index.js"); return; } /* eslint-disable no-restricted-syntax */ for (var key in webpackExports) { /* eslint-enable no-restricted-syntax */ if (!Object.prototype.hasOwnProperty.call(webpackExports, key)) { continue; } var namedExport = void 0; try { namedExport = webpackExports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/workspace/DailyCommit/src/index.js"); } } })();
@@ -19692,7 +19692,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_CommitTableList2.default, { userNameList: ['hmu332233'] })
+        _react2.default.createElement(_CommitTableList2.default, { userNameList: ['hmu332233', 'dohun94', 'tkdals1119'] })
       );
     }
   }]);
@@ -19733,7 +19733,7 @@ var _CommitTable = __webpack_require__(39);
 
 var _CommitTable2 = _interopRequireDefault(_CommitTable);
 
-var _reactAddonsUpdate = __webpack_require__(60);
+var _reactAddonsUpdate = __webpack_require__(62);
 
 var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
@@ -19759,7 +19759,7 @@ var CommitTableList = function (_React$Component) {
 
     _this.state = {
       inputUserName: '',
-      userNameList: ['hmu332233', 'tkdals1119', 'dohun94']
+      userNameList: props.userNameList
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
@@ -19798,23 +19798,36 @@ var CommitTableList = function (_React$Component) {
 
       var convertToTable = function convertToTable(userNameList) {
         return userNameList.map(function (_userName, i) {
-          return _react2.default.createElement(_CommitTable2.default, { userName: _userName });
+          return _react2.default.createElement(_CommitTable2.default, { userName: _userName, key: i });
         });
       };
 
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement('input', {
-          name: 'user_name',
-          placeholder: '\uC720\uC800 \uC774\uB984',
-          value: this.state.inputUserName,
-          onChange: this.handleChange,
-          onKeyPress: this.handleKeyPress
-        }),
+        { className: 'container' },
         _react2.default.createElement(
           'div',
-          { className: 'commit_table_list' },
+          { className: 'commit-table__input-wrapper' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { className: 'form-control-label sr-only' },
+              'User ID'
+            ),
+            _react2.default.createElement('input', {
+              type: 'text',
+              placeholder: 'User ID',
+              value: this.state.inputUserName,
+              onChange: this.handleChange,
+              onKeyPress: this.handleKeyPress,
+              className: 'form-control col-2' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'commit-table-list' },
           convertToTable(this.state.userNameList)
         )
       );
@@ -20487,6 +20500,12 @@ var _githubApi = __webpack_require__(40);
 
 var githubApi = _interopRequireWildcard(_githubApi);
 
+var _ArrayMath = __webpack_require__(60);
+
+var ArrayMath = _interopRequireWildcard(_ArrayMath);
+
+__webpack_require__(61);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -20503,7 +20522,6 @@ var propTypes = {
 
 var defaultProps = {
   userName: 'hmu332233'
-
 };
 
 var CommitTable = function (_React$Component) {
@@ -20515,9 +20533,12 @@ var CommitTable = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (CommitTable.__proto__ || Object.getPrototypeOf(CommitTable)).call(this, props));
 
     _this.state = {
-      commitState: [0, 0, 0, 0, 0, 0, 0]
+      commitState: [0, 0, 0, 0, 0, 0, 0],
+      commitCount: 0,
+      userAvatarUrl: '',
+      lastCommitDate: '',
+      isCommittedToday: false
     };
-
     return _this;
   }
 
@@ -20527,11 +20548,7 @@ var CommitTable = function (_React$Component) {
       var _this2 = this;
 
       var currentDate = new Date();
-      console.log(currentDate);
-      var newdate = new Date(currentDate);
-      newdate.setDate(newdate.getDate() - 6); // minus the date
-      var dateAWeekAgo = new Date(newdate);
-      console.log(dateAWeekAgo);
+      var dateAWeekAgo = new Date().add(-6, 'days');
 
       githubApi.getEvents(this.props.userName).then(function (eventsData) {
 
@@ -20540,35 +20557,38 @@ var CommitTable = function (_React$Component) {
           var eventDate = new Date(event.created_at);
           return eventDate.getTime() > dateAWeekAgo.getTime();
         });
-        console.log(events);
-
         var commitState = [];
+        var commitEventsForAWeek = [];
 
         for (var i = 0; i < 7; i++) {
           commitState.push(0);
+          commitEventsForAWeek.push([]);
         }
         events.forEach(function (event) {
           var date = new Date(event.created_at);
           var day = date.getDay();
-          console.log(date);
-          console.log(day);
           if (commitState[day]) {
             commitState[day] += 1;
           } else {
             commitState[day] = 1;
           }
+          commitEventsForAWeek[day].push(event);
         });
+        console.log(commitEventsForAWeek);
 
-        console.log(commitState);
+        var lastCommitDate = new Date(events[0].created_at);
         _this2.setState({
-          commitState: commitState
+          commitState: commitState,
+          commitCount: ArrayMath.sum(commitState),
+          userAvatarUrl: events[0].actor.avatar_url,
+          lastCommitDate: lastCommitDate.format("MM-DD hh:mm", 9),
+          isCommittedToday: lastCommitDate.getDate() === currentDate.getDate()
         });
       });
     }
   }, {
     key: 'render',
     value: function render() {
-
       var nodeElement = function nodeElement(active, commitSize, _key) {
         var _className = 'node ' + active;
         return _react2.default.createElement(
@@ -20590,16 +20610,66 @@ var CommitTable = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'commit_table' },
+        { className: 'commit-table' },
         _react2.default.createElement(
           'div',
-          { className: 'table' },
-          convertToNode(this.state.commitState)
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'user_name' },
-          this.props.userName
+          { className: 'row bg-white' },
+          _react2.default.createElement(
+            'div',
+            { className: 'left-col col-lg-6 mb-2 mb-lg-0 d-flex align-items-center justify-content-between' },
+            _react2.default.createElement(
+              'div',
+              { className: 'commit-table__user-profile d-flex align-items-center' },
+              _react2.default.createElement(
+                'div',
+                { className: 'commit-table__user-image-wrapper' },
+                _react2.default.createElement('img', { src: this.state.userAvatarUrl, alt: 'img', className: 'img-fluid' })
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'commit-table__user-id' },
+                _react2.default.createElement(
+                  'h6',
+                  null,
+                  this.props.userName
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'commit-table__check' },
+              'Today Commit: ',
+              _react2.default.createElement(
+                'span',
+                null,
+                this.state.isCommittedToday ? 'O' : 'X'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'right-col col-lg-6 d-flex align-items-center' },
+            _react2.default.createElement(
+              'div',
+              { className: 'commit-table__date' },
+              this.state.lastCommitDate
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'commit-table__count' },
+              'count: ',
+              _react2.default.createElement(
+                'span',
+                null,
+                this.state.commitCount
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'commit-table__commits ml-auto' },
+              convertToNode(this.state.commitState)
+            )
+          )
         )
       );
     }
@@ -21548,6 +21618,247 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sum = sum;
+exports.average = average;
+
+/* 배열 안의 모든 인자에 대해 합을 구한다 */
+function sum(array) {
+  var arraySum = array.reduce(function (prevVal, currentVal) {
+    return prevVal + currentVal;
+  });
+
+  return arraySum;
+}
+
+/* 배열 안의 모든 인자에 대한 평균을 구한다 */
+function average(array) {
+  var arraySum = array.reduce(function (prevVal, currentVal) {
+    return prevVal + currentVal;
+  });
+
+  return arraySum / array.length;
+}
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } /* eslint-disable camelcase, no-undef */ var webpackExports = typeof __webpack_exports__ !== 'undefined' ? __webpack_exports__ : module.exports; /* eslint-enable camelcase, no-undef */ if (typeof webpackExports === 'function') { __REACT_HOT_LOADER__.register(webpackExports, 'module.exports', "/workspace/DailyCommit/src/utils/ArrayMath.js"); return; } /* eslint-disable no-restricted-syntax */ for (var key in webpackExports) { /* eslint-enable no-restricted-syntax */ if (!Object.prototype.hasOwnProperty.call(webpackExports, key)) { continue; } var namedExport = void 0; try { namedExport = webpackExports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/workspace/DailyCommit/src/utils/ArrayMath.js"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports) {
+
+
+
+
+/*
+* @version  17.7.0
+* @author   Lauri Rooden <lauri@rooden.ee>
+* @license  MIT License
+*/
+
+
+
+!function(Date, proto) {
+	var maskRe = /("|')((?:\\?.)*?)\1|([YMDZ])\3\3\3?|([YMDHhmsWSZ])(\4?)|[uUASwoQ]/g
+	, dateRe = /(\d+)[-.\/](\d+)[-.\/](\d+)/
+	, timeRe = /(\d+):(\d+)(?::(\d+))?(\.\d+)?(?:\s*(?:(a)|(p))\.?m\.?)?(\s*(?:Z|GMT|UTC)?(?:([-+]\d\d):?(\d\d)?)?)?/i
+	, unescapeRe = /\\(.)/g
+	, map = { D:"Date", h:"Hours", m:"Minutes", s:"Seconds", S:"Milliseconds" }
+	, units = {
+		seconds: 1000,
+		sec: 1000,
+		minutes: 60000,
+		min: 60000,
+		hours: 3600000,
+		hour: 3600000,
+		days: 86400000,
+		day: 86400000,
+		weeks: 604800000,
+		week: 604800000
+	}
+
+	//, isoDateRe = /(\d{4})[-.\/]W(\d\d?)[-.\/](\d)/
+
+
+	// ISO 8601 specifies numeric representations of date and time.
+	//
+	// The international standard date notation is
+	// YYYY-MM-DD
+	//
+	// The international standard notation for the time of day is
+	// hh:mm:ss
+	//
+	// Time zone
+	//
+	// The strings +hh:mm, +hhmm, or +hh (ahead of UTC)
+	// -hh:mm, -hhmm, or -hh (time zones west of the zero meridian, which are behind UTC)
+	//
+	// 12:00Z = 13:00+01:00 = 0700-0500
+
+	Date[proto].date = Date[proto].format = function(mask, _zone) {
+		mask = Date.masks[mask] || mask || Date.masks["default"]
+
+		var undef, zonediff
+		, date = this
+		, origin = +date
+		, get = "get" + (mask.slice(0, 4) == "UTC:" ? (mask = mask.slice(4), "UTC") : "")
+		, zone = _zone == undef ? date._z : _zone
+
+		if (zone != undef && get == "get") {
+			get = "getUTC"
+			date.setTime( origin + (36e5 * zone) )
+			zonediff = 60 * zone
+		}
+
+		mask = mask.replace(maskRe, function(match, quote, text, MD, single, pad) {
+			text = MD == "Y"  ? date[get + "FullYear"]()
+			: single == "Z" || MD == "Z"   ? (
+				quote = zonediff || get == "get" && -date.getTimezoneOffset() || 0,
+				quote ? (
+					(quote < 0 ? ((quote=-quote), "-") : "+") +
+					(quote < 600 ? "0" : "") +
+					(0|(quote/60)) +
+					((quote%=60) || MD ? (pad || match == "ZZZZ" ? "" : ":") + (quote > 9 ? quote : "0" + quote) : "")
+				)
+				: "Z"
+			)
+			: MD              ? Date.names[ date[get + (MD == "M" ? "Month" : "Day" ) ]() + ( match == "DDD" ? 24 : MD == "D" ? 31 : match == "MMM" ? 0 : 12 ) ]
+			: single == "Y"   ? date[get + "FullYear"]() % 100
+			: single == "W"   ? ( quote = new Date(origin + ((4 - (date[get + "Day"]()||7)) * 86400000))
+			                    , Math.ceil(((quote.getTime() - quote["s" + get.slice(1) + "Month"](0, 1)) / 86400000 + 1 ) / 7)
+					    )
+			: single == "M"   ? date[get + "Month"]() + 1
+			: single == "H"   ? date[get + "Hours"]() % 12 || 12
+			: single          ? date[get + map[single]]()
+			: match == "u"    ? (date/1000)>>>0
+			: match == "U"    ? origin
+			: match == "Q"    ? ((date[get + "Month"]()/3)|0) + 1
+			: match == "A"    ? Date[date[get + "Hours"]() > 11 ? "pm" : "am"]
+			: match == "w"    ? date[get + "Day"]() || 7
+			: match == "o"    ? new Date(origin + ((4 - (date[get + "Day"]()||7)) * 86400000))[get + "FullYear"]()
+			: quote           ? text.replace(unescapeRe, "$1")
+			: match
+			if (match == "SS" && text < 100) {
+				text = "0" + text
+			}
+			return pad && text < 10 && single != "Z" ? "0" + text : text
+		})
+		if (zonediff != undef) {
+			date.setTime(origin)
+		}
+		return mask
+	}
+
+	Date[proto].tz = function(zone) {
+		this._z = zone
+		return this
+	}
+
+	Date[proto].add = function(amount, unit) {
+		var date = this
+		amount |= 0
+		if ((unit == "month" || unit == "months") || (unit == "year" || unit == "years") && (amount *= 12)) {
+			date.setUTCMonth(date.getUTCMonth() + amount)
+		} else if (amount) {
+			date.setTime(date.getTime() + (amount * (units[unit] || 1)))
+		}
+		return date
+	}
+
+	Date[proto].startOf = function(unit) {
+		var date = this
+		, month = 0
+		if (unit == "year" || unit == "years") {
+			date.setUTCMonth(0, 1)
+			unit = "day"
+		} else if (unit == "month" || unit == "months") {
+			date.setUTCDate(1)
+			unit = "day"
+		}
+		date.setTime(date - (date % (units[unit] || 1)))
+		return date
+	}
+
+	Date[proto].endOf = function(unit) {
+		return this.startOf(unit).add(1, unit).add(-1)
+	}
+
+	Date[proto].diff = function(from, unit) {
+		var diff = (this - from) / (units[unit] || 1)
+		return diff | 0
+	}
+
+	Date.am = "AM"
+	Date.pm = "PM"
+
+	Date.masks = {
+		"default": "DDD MMM DD YYYY hh:mm:ss",
+		"iso": "UTC:YYYY-MM-DD'T'hh:mm:ss'Z'"
+	}
+	Date.names = "JanFebMarAprMayJunJulAugSepOctNovDecJanuaryFebruaryMarchAprilMayJuneJulyAugustSeptemberOctoberNovemberDecemberSunMonTueWedThuFriSatSundayMondayTuesdayWednesdayThursdayFridaySaturday".match(/.[a-z]+/g)
+
+	//*/
+
+
+	/*
+	 * // In Chrome Date.parse("01.02.2001") is Jan
+	 * num = +date || Date.parse(date) || ""+date;
+	 */
+
+	String[proto].date = Number[proto].date = function(format, zoneOut, zoneIn) {
+		var undef, match, year, month
+		, date = new Date()
+		, num = +this || "" + this
+
+		if (isNaN(num)) {
+			if (match = num.match(dateRe)) {
+				// Big endian date, starting with the year, eg. 2011-01-31
+				// Middle endian date, starting with the month, eg. 01/31/2011
+				// Little endian date, starting with the day, eg. 31.01.2011
+				year = match[1] > 99 ? 1 : 3
+				month = Date.middleEndian ? 4 - year : 2
+				date.setFullYear(match[year], match[month] - 1, match[6 - month - year])
+			}
+
+			// Time
+			match = num.match(timeRe) || [0, 0, 0]
+			date.setHours(
+				match[6] && match[1] < 12 ? +match[1] + 12 :
+				match[5] && match[1] == 12 ? 0 : match[1],
+				match[2], match[3]|0, (1000 * match[4])|0
+			)
+
+			// Timezone
+			if (match[7]) {
+				zoneIn = (match[8]|0) + ((match[9]|0)/(match[8]<0?-60:60))
+			}
+		} else {
+			date.setTime(num < 4294967296 ? num * 1000 : num)
+		}
+
+		if (zoneIn != undef) {
+			date.setTime(date - (60 * zoneIn + date.getTimezoneOffset()) * 60000)
+		}
+
+		return format ? date.format(format, zoneOut) : date
+	}
+
+}(Date, "prototype")
+
+
+
+
+
+
+/***/ }),
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
