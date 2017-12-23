@@ -18,7 +18,8 @@ class CommitTableList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputUserName: ''
+      inputUserName: '',
+      userNameList: props.userNameList
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -55,7 +56,7 @@ class CommitTableList extends React.Component {
     const convertToTable = function (userNameList) {
       return userNameList.map(function (_userName, i) {
         return (
-          <CommitTable userName={_userName}/>
+          <CommitTable userName={_userName} key={i}/>
         );
       });
     };
@@ -75,7 +76,7 @@ class CommitTableList extends React.Component {
           </div>
         </div>
         <div className="commit-table-list">
-          {convertToTable(this.props.userNameList)}
+          {convertToTable(this.state.userNameList)}
         </div>
 			</div>
       
