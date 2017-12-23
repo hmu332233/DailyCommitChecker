@@ -29,7 +29,8 @@ class CommitTable extends React.Component {
     
     const currentDate = new Date();
     const dateAWeekAgo = new Date().add(-6, 'days');
-  	
+    dateAWeekAgo.setHours(0,0,0,0);
+
     githubApi.getEvents(this.props.userName)
       .then(eventsData => {
       	

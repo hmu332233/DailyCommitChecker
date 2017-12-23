@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "272e6574410caa4bc01c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b43fc7e4f481b956f592"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -20549,6 +20549,7 @@ var CommitTable = function (_React$Component) {
 
       var currentDate = new Date();
       var dateAWeekAgo = new Date().add(-6, 'days');
+      dateAWeekAgo.setHours(0, 0, 0, 0);
 
       githubApi.getEvents(this.props.userName).then(function (eventsData) {
 
@@ -20720,7 +20721,7 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function getEvents(userName) {
-    return _axios2.default.get('https://api.github.com/users/' + userName + '/events');
+    return _axios2.default.get('https://api.github.com/users/' + userName + '/events?per_page=100');
 }
 
  ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } /* eslint-disable camelcase, no-undef */ var webpackExports = typeof __webpack_exports__ !== 'undefined' ? __webpack_exports__ : module.exports; /* eslint-enable camelcase, no-undef */ if (typeof webpackExports === 'function') { __REACT_HOT_LOADER__.register(webpackExports, 'module.exports', "/workspace/DailyCommit/src/api/githubApi.js"); return; } /* eslint-disable no-restricted-syntax */ for (var key in webpackExports) { /* eslint-enable no-restricted-syntax */ if (!Object.prototype.hasOwnProperty.call(webpackExports, key)) { continue; } var namedExport = void 0; try { namedExport = webpackExports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/workspace/DailyCommit/src/api/githubApi.js"); } } })();
