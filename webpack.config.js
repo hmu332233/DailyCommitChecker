@@ -4,14 +4,14 @@ module.exports = {
     entry: './src/index.js',
 
     output: {
-        path: __dirname + '/public/',
+        path: __dirname + '/resourece/',
         filename: 'bundle.js'
     },
 
     devServer: {
         host: '0.0.0.0',
         port: 3000,
-        contentBase: __dirname + '/public/',
+        contentBase: __dirname + '/resourece/',
         disableHostCheck: true
     },
 
