@@ -18,8 +18,7 @@ class CommitTableList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputUserName: '',
-      userNameList: ['hmu332233', 'tkdals1119', 'dohun94']
+      inputUserName: ''
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -76,7 +75,7 @@ class CommitTableList extends React.Component {
           </div>
         </div>
         <div className="commit-table-list">
-          {convertToTable(this.state.userNameList)}
+          {convertToTable(this.props.userNameList)}
         </div>
 			</div>
       

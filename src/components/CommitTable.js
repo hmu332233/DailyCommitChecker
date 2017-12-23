@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as githubApi from '../api/githubApi';
+import * as ArrayMath from '../utils/ArrayMath';
 
 const propTypes = {
   userName: PropTypes.string
@@ -16,7 +17,9 @@ class CommitTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      commitState: [0,0,0,0,0,0,0]
+      commitState: [0,0,0,0,0,0,0],
+      commitCount: 0,
+      userAvatarUrl: ''
     };
     
   }
@@ -59,13 +62,14 @@ class CommitTable extends React.Component {
       
       	console.log(commitState);
       	this.setState({
-          commitState: commitState
+          commitState: commitState,
+          commitCount: ArrayMath.sum(commitState),
+          userAvatarUrl: events[0].actor.avatar_url
         });
       });
   }
 
   render() {
-    
     const nodeElement = function (active, commitSize, _key) {
       const _className = `node ${active}`;
      	return (
@@ -88,7 +92,7 @@ class CommitTable extends React.Component {
         <div className="row bg-white">
           <div className="left-col col-lg-6 d-flex align-items-center justify-content-between">
             <div className="commit-table__user-profile d-flex align-items-center">
-              <div className="commit-table__user-image-wrapper"><img src="" alt="img" className="img-fluid"/></div>
+              <div className="commit-table__user-image-wrapper"><img src={this.state.userAvatarUrl} alt="img" className="img-fluid"/></div>
               <div className="commit-table__user-id">
                 <h6>{this.props.userName}</h6>
               </div>
@@ -97,7 +101,7 @@ class CommitTable extends React.Component {
           </div>
           <div className="right-col col-lg-6 d-flex align-items-center">
             <div className="commit-table__date">12:00 PM </div>
-            <div className="commit-table__count">count: <span>20</span></div>
+            <div className="commit-table__count">count: <span>{this.state.commitCount}</span></div>
             <div className="commit-table__commits ml-auto">
               {convertToNode(this.state.commitState)}
             </div>
