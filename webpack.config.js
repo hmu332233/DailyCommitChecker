@@ -11,7 +11,7 @@ module.exports = {
     devServer: {
         host: '0.0.0.0',
         port: 3000,
-        contentBase: __dirname + '/resourece/',
+        contentBase: __dirname + '/',
         disableHostCheck: true
     },
 
