@@ -136,8 +136,11 @@ section {
 .activity-item__info {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
-
 .activity-item__commit-message {
   display: block;
+}
+.activity-item__repo {
+  margin-bottom: 10px;
 }

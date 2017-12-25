@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CommitActivity from './CommitActivity';
 import * as githubApi from '../api/githubApi';
 import * as ArrayMath from '../utils/ArrayMath';
 import 'date-format-lite';
@@ -21,7 +22,8 @@ class CommitTable extends React.Component {
       commitCount: 0,
       userAvatarUrl: '',
       lastCommitDate: '',
-      isCommittedToday: false
+      isCommittedToday: false,
+      isShowingActivity: true
     };
   }
   
@@ -107,6 +109,7 @@ class CommitTable extends React.Component {
             </div>
           </div>
         </div>
+				{this.state.isShowingActivity && <CommitActivity event={this.state.event} />}
       </div>
     );
   }
