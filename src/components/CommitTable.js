@@ -89,7 +89,7 @@ class CommitTable extends React.Component {
     
     return (
       <div className="commit-table">
-        <div className="row bg-white">
+        <div className="row bg-white card-bg">
           <div className="left-col col-lg-6 mb-2 mb-lg-0 d-flex align-items-center justify-content-between">
             <div className="commit-table__user-profile d-flex align-items-center">
               <div className="commit-table__user-image-wrapper"><img src={this.state.userAvatarUrl} alt="img" className="img-fluid"/></div>
