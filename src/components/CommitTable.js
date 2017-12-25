@@ -25,6 +25,14 @@ class CommitTable extends React.Component {
       isCommittedToday: false,
       isShowingActivity: true
     };
+    
+    this.handleClickTable = this.handleClickTable.bind(this);
+  }
+  
+  handleClickTable() {
+  	this.setState({
+      isShowingActivity: !this.state.isShowingActivity
+    }); 
   }
   
   componentDidMount() {
@@ -90,7 +98,7 @@ class CommitTable extends React.Component {
     };
     
     return (
-      <div className="commit-table">
+      <div className="commit-table" onClick={this.handleClickTable}>
         <div className="row bg-white card-bg">
           <div className="left-col col-lg-6 mb-2 mb-lg-0 d-flex align-items-center justify-content-between">
             <div className="commit-table__user-profile d-flex align-items-center">
