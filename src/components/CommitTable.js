@@ -59,11 +59,11 @@ class CommitTable extends React.Component {
   
   parseEventObj(events) {
     
-    console.log(events);
+    // console.log(events);
     const pushEvents = events.filter(function (event) {
       return event.type === 'PushEvent';
     });
-    console.log(pushEvents);
+    // console.log(pushEvents);
     const newPushEvents = pushEvents.map(function (event) {
       const new_event = {
         type: 'PushEvent',
@@ -75,7 +75,7 @@ class CommitTable extends React.Component {
  			return new_event;
     });
     
-    console.log('newPushEvents',newPushEvents);
+    // console.log('newPushEvents',newPushEvents);
     return newPushEvents;
   }
   
