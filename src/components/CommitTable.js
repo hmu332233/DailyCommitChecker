@@ -5,6 +5,26 @@ import * as githubApi from '../api/githubApi';
 import * as ArrayMath from '../utils/ArrayMath';
 import 'date-format-lite';
 
+var dump_event = [{
+  type: 'PushEvent',
+  date: new Date(),
+  repo: {
+    name: 'hmu332233/DailyCommitChecker',
+    url: ''
+  },
+  payload: {
+  	commits: [{
+      message: '[Fix] font not applied',
+    	url: ''
+    }, {
+      message: `Merge branch 'hotfix/0.1.1'`,
+    	url: ''
+    }],
+    ref: 'refs/heads/master'
+	}
+}];
+
+
 const propTypes = {
   userName: PropTypes.string
 };
@@ -23,16 +43,40 @@ class CommitTable extends React.Component {
       userAvatarUrl: '',
       lastCommitDate: '',
       isCommittedToday: false,
-      isShowingActivity: true
+      isShowingActivity: true,
+      events: dump_event
     };
     
     this.handleClickTable = this.handleClickTable.bind(this);
+    this.parseEventObj = this.parseEventObj.bind(this);
   }
   
   handleClickTable() {
   	this.setState({
       isShowingActivity: !this.state.isShowingActivity
     }); 
+  }
+  
+  parseEventObj(events) {
+    
+    console.log(events);
+    const pushEvents = events.filter(function (event) {
+      return event.type === 'PushEvent';
+    });
+    console.log(pushEvents);
+    const newPushEvents = pushEvents.map(function (event) {
+      const new_event = {
+        type: 'PushEvent',
+        date: event.created_at,
+        repo: event.repo,
+        commits: event.payload.commits,
+        branch: event.payload.ref.split('refs/heads/')[1]
+      };
+ 			return new_event;
+    });
+    
+    console.log('newPushEvents',newPushEvents);
+    return newPushEvents;
   }
   
   componentDidMount() {
@@ -74,7 +118,8 @@ class CommitTable extends React.Component {
           commitCount: ArrayMath.sum(commitState),
           userAvatarUrl: events[0].actor.avatar_url,
           lastCommitDate: lastCommitDate.format("MM-DD hh:mm", 9),
-          isCommittedToday: lastCommitDate.getDate() === currentDate.getDate()
+          isCommittedToday: lastCommitDate.getDate() === currentDate.getDate(),
+          events: events
         });
       });
   }
@@ -117,7 +162,7 @@ class CommitTable extends React.Component {
             </div>
           </div>
         </div>
-				{this.state.isShowingActivity && <CommitActivity event={this.state.event} />}
+				{this.state.isShowingActivity && <CommitActivity events={this.parseEventObj(this.state.events)} />}
       </div>
     );
   }
