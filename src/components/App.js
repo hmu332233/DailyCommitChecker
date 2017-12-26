@@ -12,7 +12,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-      	<CommitTableList userNameList={['hmu332233','dohun94','tkdals1119']}/>
+      	<CommitTableList userNameList={['hmu332233']}/>
       </div>
     );
   }
