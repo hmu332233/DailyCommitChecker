@@ -40,7 +40,7 @@ class CommitActivityCard extends React.Component {
         <div className="activity-item__repo">
           <h6>repoName</h6>
           <a className="activity-item__repo-title" href={this.props.event.repo.url}>{this.props.event.repo.name}</a>
-          <span>{this.props.event.branch}</span>
+          <span> - {this.props.event.branch}</span>
         </div>
         <div className="activity-item__commits">
           <h6 className="activity-item__commits__title">Commits</h6>
