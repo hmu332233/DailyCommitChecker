@@ -43,7 +43,7 @@ class CommitTable extends React.Component {
       userAvatarUrl: '',
       lastCommitDate: '',
       isCommittedToday: false,
-      isShowingActivity: true,
+      isShowingActivity: false,
       events: dump_event
     };
     
