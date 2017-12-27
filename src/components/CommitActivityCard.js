@@ -10,22 +10,22 @@ const defaultProps = {
 
 };
 
-
 class CommitActivityCard extends React.Component {
   
   constructor(props) {
     super(props);
-    
+    this.state = {
+      repoUrl: 'https://github.com/' + props.event.repo.name
+    };
     // console.log(props.event);
   }
   
   render() {
-    
-    const mapToCommitListItem = function (commits) {
+    const mapToCommitListItem = function (commits, repoUrl) {
       return commits.map(function (commit, i) {
         return (
           <li key={i}>
-          	<a href={commit.url} className="activity-item__commit-message">{commit.message}</a>
+          	<a href={repoUrl + '/commit/' + commit.sha} className="activity-item__commit-message">{commit.message}</a>
           </li>
         );
       });
@@ -39,13 +39,13 @@ class CommitActivityCard extends React.Component {
         </div>
         <div className="activity-item__repo">
           <h6>repoName</h6>
-          <a className="activity-item__repo-title" href={this.props.event.repo.url}>{this.props.event.repo.name}</a>
+          <a className="activity-item__repo-title" href={this.state.repoUrl}>{this.props.event.repo.name}</a>
           <span> - {this.props.event.branch}</span>
         </div>
         <div className="activity-item__commits">
           <h6 className="activity-item__commits__title">Commits</h6>
           <ul className="activity-item__commit">
-            {mapToCommitListItem(this.props.event.commits)}
+            {mapToCommitListItem(this.props.event.commits, this.state.repoUrl)}
           </ul>
         </div>
       </div>
