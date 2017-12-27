@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9e6955799e704d6579e8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c950a72d08496be9e256"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -21078,23 +21078,26 @@ var CommitActivityCard = function (_React$Component) {
   function CommitActivityCard(props) {
     _classCallCheck(this, CommitActivityCard);
 
-    return _possibleConstructorReturn(this, (CommitActivityCard.__proto__ || Object.getPrototypeOf(CommitActivityCard)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CommitActivityCard.__proto__ || Object.getPrototypeOf(CommitActivityCard)).call(this, props));
 
+    _this.state = {
+      repoUrl: 'https://github.com/' + props.event.repo.name
+    };
     // console.log(props.event);
+    return _this;
   }
 
   _createClass(CommitActivityCard, [{
     key: 'render',
     value: function render() {
-
-      var mapToCommitListItem = function mapToCommitListItem(commits) {
+      var mapToCommitListItem = function mapToCommitListItem(commits, repoUrl) {
         return commits.map(function (commit, i) {
           return _react2.default.createElement(
             'li',
             { key: i },
             _react2.default.createElement(
               'a',
-              { href: commit.url, className: 'activity-item__commit-message' },
+              { href: repoUrl + '/commit/' + commit.sha, className: 'activity-item__commit-message' },
               commit.message
             )
           );
@@ -21128,7 +21131,7 @@ var CommitActivityCard = function (_React$Component) {
           ),
           _react2.default.createElement(
             'a',
-            { className: 'activity-item__repo-title', href: this.props.event.repo.url },
+            { className: 'activity-item__repo-title', href: this.state.repoUrl },
             this.props.event.repo.name
           ),
           _react2.default.createElement(
@@ -21149,7 +21152,7 @@ var CommitActivityCard = function (_React$Component) {
           _react2.default.createElement(
             'ul',
             { className: 'activity-item__commit' },
-            mapToCommitListItem(this.props.event.commits)
+            mapToCommitListItem(this.props.event.commits, this.state.repoUrl)
           )
         )
       );
