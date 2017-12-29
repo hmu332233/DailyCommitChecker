@@ -121,7 +121,12 @@ class CommitTable extends React.Component {
           isCommittedToday: lastCommitDate.getDate() === currentDate.getDate(),
           events: events
         });
-      });
+      }, error => {
+      	if (error.response.status === 404) {
+          alert('존재하지 않는 유저입니다.');
+          // self.unmountComponentAtNode(self);
+        }
+    });
   }
 
   render() {
