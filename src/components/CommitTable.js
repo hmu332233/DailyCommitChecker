@@ -122,9 +122,7 @@ class CommitTable extends React.Component {
           events: events
         });
       }, error => {
-      	if (error.response.status === 404) {
-          alert('존재하지 않는 유저입니다.');
-        }
+      	console.log(error);
     });
   }
 

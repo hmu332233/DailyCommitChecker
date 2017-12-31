@@ -51,7 +51,6 @@ class CommitTableList extends React.Component {
       const userName = this.state.inputUserName;
       githubApi.getUserInfo(userName).then(userInfo => {
         if (userInfo) {
-          console.dir(userInfo);
           this.addNewUser(userName);  
         } else {
           alert('존재하지 않는 유저입니다.');
@@ -59,10 +58,6 @@ class CommitTableList extends React.Component {
       });
     }
   };
-
-
-
-
 
   render() {
     const convertToTable = function (userNameList) {
