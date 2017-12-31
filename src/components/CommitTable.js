@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import CommitActivity from './CommitActivity';
 import * as githubApi from '../api/githubApi';
@@ -58,7 +59,6 @@ class CommitTable extends React.Component {
   }
   
   parseEventObj(events) {
-    
     // console.log(events);
     const pushEvents = events.filter(function (event) {
       return event.type === 'PushEvent';
@@ -121,7 +121,9 @@ class CommitTable extends React.Component {
           isCommittedToday: lastCommitDate.getDate() === currentDate.getDate(),
           events: events
         });
-      });
+      }, error => {
+      	console.log(error);
+    });
   }
 
   render() {
