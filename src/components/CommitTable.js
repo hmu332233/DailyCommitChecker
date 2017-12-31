@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import CommitActivity from './CommitActivity';
 import * as githubApi from '../api/githubApi';
@@ -58,7 +59,6 @@ class CommitTable extends React.Component {
   }
   
   parseEventObj(events) {
-    
     // console.log(events);
     const pushEvents = events.filter(function (event) {
       return event.type === 'PushEvent';
@@ -124,7 +124,6 @@ class CommitTable extends React.Component {
       }, error => {
       	if (error.response.status === 404) {
           alert('존재하지 않는 유저입니다.');
-          // self.unmountComponentAtNode(self);
         }
     });
   }
