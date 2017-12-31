@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CommitTable from './CommitTable';
-
 import update from 'react-addons-update';
 
+import * as githubApi from '../api/githubApi';
+
 const propTypes = {
- 
+
 };
 
 const defaultProps = {
@@ -14,18 +15,18 @@ const defaultProps = {
 };
 
 class CommitTableList extends React.Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
       inputUserName: '',
       userNameList: props.userNameList
     };
-    
+
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
-  
+
   addNewUser(userName) {
     const newUserNameList = update(
       this.state.userNameList,
@@ -38,48 +39,59 @@ class CommitTableList extends React.Component {
       inputUserName: ''
     });
   }
-  
+
   handleChange(e) {
-  	this.setState({
+    this.setState({
       inputUserName: e.target.value
     });
   }
-  
+
   handleKeyPress(e) {
     if(e.charCode==13){
-      this.addNewUser(this.state.inputUserName);
+      const userName = this.state.inputUserName;
+      githubApi.getUserInfo(userName).then(userInfo => {
+        if (userInfo) {
+          console.dir(userInfo);
+          this.addNewUser(userName);  
+        } else {
+          alert('존재하지 않는 유저입니다.');
+        }
+      });
     }
   };
-  
+
+
+
+
+
   render() {
-    
     const convertToTable = function (userNameList) {
       return userNameList.map(function (_userName, i) {
         return (
           <CommitTable userName={_userName} key={i}/>
-        );
+        );  
       });
     };
-    
+
     return (
-			<div className="container">
+      <div className="container">
         <div className="commit-table__input-wrapper">
           <div className="form-group">
             <label className="form-control-label sr-only">User ID</label>
             <input 
-							type="text"
-							placeholder="User ID" 
-							value={this.state.inputUserName}
-							onChange={this.handleChange}
-							onKeyPress={this.handleKeyPress}
-							className="form-control col-2"/>
+              type="text"
+              placeholder="User ID" 
+              value={this.state.inputUserName}
+              onChange={this.handleChange}
+              onKeyPress={this.handleKeyPress}
+              className="form-control col-2"/>
           </div>
         </div>
         <div className="commit-table-list">
           {convertToTable(this.state.userNameList)}
         </div>
-			</div>
-      
+      </div>
+
     );
   }
 }
